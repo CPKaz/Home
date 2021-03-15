@@ -25,8 +25,6 @@ body {
             width:50%;
             height:50%;
             display:50;
-            min-width: 400px;
-            min-height: 200px;
             overflow: hidden;
             position: fixed;
             top: 0%;
@@ -38,7 +36,7 @@ body {
 
 .container{
 
-    font-size: 60px;
+    font-size: 3vw;
     height: 200px;
     width: 600px;
     color: white;
@@ -132,28 +130,28 @@ body {
 .menu ul li:hover .fa-linkedin-in {
   color: #4a56ff;
   text-shadow: 0 0 15px white;
-  transition: all 0.5s ease;
+  transition: all 0.7s ease;
 }
 
 .menu ul li:hover .fa-medium-m {
   color: #00ffe5;
   text-shadow: 0 0 15px white;
-  transition: all 0.5s ease;
+  transition: all 0.7s ease;
 }
 
 .menu ul li:hover .fa-file {
   color: #ffd000;
   text-shadow: 0 0 15px white;
-  transition: all 0.5s ease;
+  transition: all 0.7s ease;
 }
 
 .menu ul li:hover .fa-paper-plane {
   color: #ff0000;
   text-shadow: 0 0 15px white;
-  transition: all 0.5s ease;
+  transition: all 0.7s ease;
 }
 .menu ul li:hover .fa-github {
   color: #f700ff;
   text-shadow: 0 0 15px white;
-  transition: all 0.5s ease;
+  transition: all 0.7s ease;
 }
