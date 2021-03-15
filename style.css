@@ -1,0 +1,157 @@
+@font-face {
+  font-family: Autography;
+  src: url(Autography.otf);
+}
+
+a:link {
+   color:white;
+}
+a:visited {
+    color: white;
+}
+
+body {
+    height: 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-color: #272a47;
+    background: radial-gradient(circle at 100%, #42455a 0%, #090A0F 100%);
+    overflow: hidden;
+    font-family: Autography;
+
+}
+/*#42455a */
+        #lottie{
+            width:50%;
+            height:50%;
+            display:50;
+            overflow: hidden;
+            position: fixed;
+            top: 0%;
+            left: 25%;
+            transform: translate3d(0,0,0);
+            text-align: center;
+            opacity: 1;
+        }
+
+.container{
+
+    font-size: 60px;
+    height: 200px;
+    width: 600px;
+    color: white;
+    margin: 0;
+    padding: 0;
+
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -200px;
+}
+.menu ul{
+    text-align: center;
+    display: inline-flex;
+    padding: 0;
+    margin: 0;
+}
+
+.menu ul li{
+    display: flex;
+    justify-content: center;
+    margin: 0 15px;
+    padding: 0;
+    color: white;
+    cursor: Pointer;
+}
+
+.text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+@keyframes shrink {
+    from {
+        transform: scale(4);
+    }
+    to {
+        transform: scale(1.15);
+    }
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+.menu ul li .fa-linkedin-in {
+  opacity: 0.0;
+  animation: shrink 1.5s, fadeIn 3s;
+  animation-fill-mode: forwards;
+  animation-delay: 1.5s;
+}
+
+
+.menu ul li .fa-medium-m {
+  opacity: 0.0;
+  animation: shrink 1.5s, fadeIn 3s;
+  animation-fill-mode: forwards;
+  animation-delay: 1.625s;
+}
+
+.menu ul li .fa-file {
+  opacity: 0.0;
+  animation: shrink 1.5s, fadeIn 3s;
+  animation-fill-mode: forwards;
+  animation-delay: 1.75s;
+}
+
+.menu ul li .fa-paper-plane {
+  opacity: 0.0;
+  animation: shrink 1.5s, fadeIn 3s;
+  animation-fill-mode: forwards;
+  animation-delay: 1.875s;
+}
+
+.menu ul li .fa-github {
+  opacity: 0.0;
+  animation: shrink 1.5s, fadeIn 3s;
+  animation-fill-mode: forwards;
+  animation-delay: 1.75s;
+}
+
+.menu ul li:hover .fa-linkedin-in {
+  color: #4a56ff;
+  text-shadow: 0 0 15px white;
+  transition: all 0.5s ease;
+}
+
+.menu ul li:hover .fa-medium-m {
+  color: #00ffe5;
+  text-shadow: 0 0 15px white;
+  transition: all 0.5s ease;
+}
+
+.menu ul li:hover .fa-file {
+  color: #ffd000;
+  text-shadow: 0 0 15px white;
+  transition: all 0.5s ease;
+}
+
+.menu ul li:hover .fa-paper-plane {
+  color: #ff0000;
+  text-shadow: 0 0 15px white;
+  transition: all 0.5s ease;
+}
+.menu ul li:hover .fa-github {
+  color: #f700ff;
+  text-shadow: 0 0 15px white;
+  transition: all 0.5s ease;
+}
