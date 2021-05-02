@@ -33,7 +33,31 @@ body {
             text-align: center;
             opacity: 1;
         }
+h1 {
+  font-size: 120px;
+  color: white;
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
 
+  position: fixed;
+  top: 35%;
+  text-align: center;
+  margin-top: -140px;
+  opacity: 0.0;
+  animation: fadeIn 3s;
+  animation-fill-mode: forwards;
+
+}
+.txt {
+  font-family: Courier;
+  position: fixed;
+  top: 80%;
+  left: 50%;
+  color: white;
+  text-align: center;
+  font-size: 30px;
+}
 .container{
 
     font-size: 60px;
@@ -44,10 +68,11 @@ body {
     padding: 0;
 
     position: fixed;
+    text-align: center;
     top: 35%;
     left: 50%;
-    margin-top: -100px;
-    margin-left: -200px;
+    margin-top: -80px;
+    margin-left: -250px;
 }
 .menu ul{
     text-align: center;
@@ -69,12 +94,13 @@ body {
   color: white;
   font-size: 20px;
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -10%);
+  -ms-transform: translate(-50%, -10%);
+  transform: translate(-50%, -10%);
   text-align: center;
+  font-family: Courier;
 }
 
 @keyframes shrink {
@@ -91,40 +117,44 @@ body {
   100% {opacity:1;}
 }
 
+
+:root{
+  t = .0s;
+}
+
 .menu ul li .fa-linkedin-in {
   opacity: 0.0;
   animation: shrink 1.5s, fadeIn 3s;
   animation-fill-mode: forwards;
-  animation-delay: 1.5s;
+  animation-delay: .9s;
 }
-
 
 .menu ul li .fa-medium-m {
   opacity: 0.0;
   animation: shrink 1.5s, fadeIn 3s;
   animation-fill-mode: forwards;
-  animation-delay: 1.625s;
+  animation-delay: 1.3s;
 }
 
 .menu ul li .fa-file {
   opacity: 0.0;
   animation: shrink 1.5s, fadeIn 3s;
   animation-fill-mode: forwards;
-  animation-delay: 1.75s;
+  animation-delay: 1.1s;
 }
 
 .menu ul li .fa-paper-plane {
   opacity: 0.0;
   animation: shrink 1.5s, fadeIn 3s;
   animation-fill-mode: forwards;
-  animation-delay: 1.875s;
+  animation-delay: 1.2s;
 }
 
 .menu ul li .fa-github {
   opacity: 0.0;
   animation: shrink 1.5s, fadeIn 3s;
   animation-fill-mode: forwards;
-  animation-delay: 1.75s;
+  animation-delay: 1s;
 }
 
 .menu ul li:hover .fa-linkedin-in {
