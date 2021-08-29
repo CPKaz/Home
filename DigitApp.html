@@ -75,7 +75,7 @@
       let tensor1 = greyscale(pixels.data);
       const p = await getPrediction(tensor1);
       document.getElementById('para').innerHTML =
-        'I am '  + Math.round(p.pct*10000)/100 + '% sure this is the number' + ' ' + p.guess + '!';
+        'I am <span style="color:cyan">'  + Math.round(p.pct*10000)/100 + '%</span> sure this is the number' + ' ' + p.guess + '!';
       //document.write(p.guess);
       //document.write("   ");
       //document.write(p.pct);
@@ -151,15 +151,22 @@
       <link rel="stylesheet" href="style-2.css">
     </head>
     <body onload="init()">
-        <h1 class="h1">Digit Recognition App</h1>
-        <input type="button" class="button" value="predict" id="btn" size="30" onclick="save()" style="position:absolute;top:65%;left:42%;">
-        <input type="button" class="button" value="clear" id="clr" size="23" onclick="erase()" style="position:absolute;top:65%;left:52%;">
-        <canvas id="can" class="canvas" width="400" height="400"></canvas>
+        <div class="title">
+            <div class="canvas_and_buttons">
+                <canvas id="can" class="canvas" width="400" height="400"></canvas>
+                <input type="button" class="button" value="predict" id="btn" size="30" onclick="save()">
+                <input type="button" class="button" value="clear" id="clr" size="23" onclick="erase()">
+                
+                <div class="bottom_text">
+                    <div class="txt" style='position:absolute;top:85%;left:50%;'>Digit Recognition App</div>
+                    <div class="txt" id='para' style='position:absolute;top:90%;left:50%;font-size:1.5em;'>Please draw a single digit number.</div>
+                    <div class="txt" style='position:absolute;top:95%;left:50%;font-size:1em;'><a href="https://github.com/CPKaz/DigitApp/blob/main/MNIST_digit_model_building.ipynb" target="_blank">About</a> <a href="./index.html" target="_blank">Home</a></div>
+                </div>
+            </div>
+
+        </div>
         <canvas id="can2" class="canvas" width='28' height='28'> </canvas>
         <img id="canvasimg" style="position:absolute;top:10%;left:52%;" style="display:none;">
-        <div class="txt" id='para' style='position:absolute;top:75%;left:50%;'>Hello! Please draw a single digit number.</div>
-        <div class="txt" style='position:absolute;top:80%;left:50%;'><a href="https://github.com/CPKaz/DigitApp/blob/main/MNIST_digit_model_building.ipynb" target="_blank">The making of this project</a></div>
-        <div class="txt" style='position:absolute;top:85%;left:50%;'><a href="./index.html" target="_blank">Home</a></div>
 
     </body>
     </html>

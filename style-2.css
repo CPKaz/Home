@@ -17,47 +17,70 @@ body {
 }
 
 .canvas {
+    /* -webkit-transform: translate(0%,0%);
+    transform: translate(0%,0%); */
     margin-left: -200px;
     position: relative;
-    top: 15%;
     left: 50%;
     display: block;
 }
+
 h1 {
-  margin-left: -400px;
-  color: white;
-  font-size: 60px;
-  position: absolute;
+  /* margin-left: -400px;
+  margin-bottom: 100px; */
   left: 50%;
+  color: white;
+  font-size: 20px;
+  position: absolute;
   text-align: center;
   font-family: Courier;
+}
+
+.title {
+  margin: 20px;
 }
 
 .txt {
   color: white;
   font-size: 20px;
-  position: absolute;
+  /* position: absolute;
   top: 50%;
-  left: 50%;
+  left: 50%; */
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   text-align: center;
   font-family: Courier;
 }
+.txt:first-of-type {
+font-size: 30px;
+}
+
 
 .button {
-  border:0.1em solid #FFFFFF;
-  color: white;
   padding: 15px 32px;
   text-align: center;
-  display: inline-block;
+
   font-size: 16px;
   margin: 4px 2px;
+
   cursor: pointer;
   transition: all 0.2s;
   background-color: #000000;
+  border:0.1em solid #FFFFFF;
+  color: white;
 }
+
+.canvas_and_buttons{
+  text-align: center;
+  /* display: block;
+  margin-left: auto;
+  margin-right: auto; */
+}
+
+.bottom_text{
+}
+
 .button:hover{
   color: #000000;
   background-color: #FFFFFF;
