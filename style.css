@@ -117,11 +117,6 @@ h1 {
   100% {opacity:1;}
 }
 
-
-:root{
-  t = .0s;
-}
-
 .menu ul li .fa-linkedin-in {
   opacity: 0.0;
   animation: shrink 1.5s, fadeIn 3s;
