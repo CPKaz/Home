@@ -1,63 +1,70 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/f3de101503.js" rel="stylesheet" crossorigin="anonymous"></script>
-    <meta charset="UTF-8">
-    <title>Home</title>
+  <title>Plot 1</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
 </head>
 <body>
+  <div id="scatterplot"></div>
 
-<div class= "page">
-<div id="lottie"></div>
-    <div class="container">
-      <h1>
-        Chris Kazakis
-      </h1>
+  <script>
+    const data = [
+      { x: 10, y: 20 },
+      { x: 30, y: 40 },
+      { x: 50, y: 60 },
+    ];
 
-        <br>
-        <div class="menu">
-            <ul>
-                <li>
-                <a href="https://www.linkedin.com/in/christopher-kazakis/" target="_blank">
-                    <i class="fab fa-linkedin-in"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://github.com/CPKaz" target="_blank">
-                        <i class= "fab fa-github"> </i>
-                    </a>
-                </li>
-                </i>
-                 </li>
-                <li>
-                    <a href="./Christopher_Kazakis_Resume.pdf" target="_blank">
-                        <i class="fas fa-file"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="mailto:ck7aj@virginia.edu" target="_blank">
-                        <i class="fas fa-paper-plane"> </i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://ck7aj.medium.com/" target="_blank">
-                        <i class="fab fa-medium-m"></i>
-                    </a>
-                 </li>
-            </ul>
-        </div>
-    </div>
-    <div class="text">
-      Hi, I'm Chris. I recently graduated from the Univerity of Virginia
-      with a degree in Computer Science and Statistics. I hope to soon start a
-      career in Machine Learning or Software Engineering. In my free time,
-      I enjoy reading and playing chess. Feel free to coordinate a match
-      with me via email. Here are some of my projects:<br> <br>
-      <a href="./DigitApp.html" target="_blank"> Digit Recognition App</a>
-      <a href="https://github.com/CPKaz/C_ext" target="_blank"> Keeping Time Chrome Extension</a>
-    </div>
-</div>
+    const width = 600;
+    const height = 400;
+    const margin = { top: 20, right: 20, bottom: 40, left: 40 };
+    const svg = d3.select("#scatterplot")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
 
+    const xScale = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.x)])
+      .range([margin.left, width - margin.right]);
+
+    const yScale = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.y)])
+      .range([height - margin.bottom, margin.top]);
+
+    const xAxis = d3.axisBottom(xScale);
+    const yAxis = d3.axisLeft(yScale);
+
+    svg.append("g")
+      .attr("class", "x-axis")
+      .attr("transform", `translate(0, ${height - margin.bottom})`)
+      .call(xAxis);
+
+    svg.append("g")
+      .attr("class", "y-axis")
+      .attr("transform", `translate(${margin.left}, 0)`)
+      .call(yAxis);
+
+    const circles = svg.selectAll("circle")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("cx", d => xScale(d.x))
+      .attr("cy", d => yScale(d.y))
+      .attr("r", 5)
+      .attr("fill", "steelblue");
+
+    const zoom = d3.zoom()
+      .scaleExtent([1, 5])
+      .on("zoom", zoomed);
+
+    svg.call(zoom);
+
+    // Zoom function
+    function zoomed(event) {
+      const { transform } = event;
+      circles.attr("transform", transform);
+      svg.select(".x-axis").call(xAxis.scale(transform.rescaleX(xScale)));
+      svg.select(".y-axis").call(yAxis.scale(transform.rescaleY(yScale)));
+    }
+  </script>
 </body>
 </html>
