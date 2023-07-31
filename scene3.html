@@ -335,7 +335,6 @@
       drawLineChart(selectedLines); 
     });
   </script>
-</body>
 <div>
     <label for="xAxisSelector">Select X-Axis:</label>
     <select id="xAxisSelector">
@@ -811,21 +810,6 @@
         .style("padding", "4px");
 
       const referenceY = y(22.9);
-      svg
-        .append("line")
-        .attr("x1", 0)
-        .attr("x2", width)
-        .attr("y1", referenceY)
-        .attr("y2", referenceY)
-        .attr("stroke", "red")
-        .attr("stroke-dasharray", "5,5");
-
-      svg
-        .append("text")
-        .attr("x", 675)
-        .attr("y", referenceY - 6)
-        .attr("fill", "red")
-        .text("1992 obesity rate");
 
       const circles = svg
         .selectAll("circle")
