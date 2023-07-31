@@ -6,34 +6,47 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
   </head>
   <body>
-    <h1>Obesity Rates in the United States</h1>
+    <h1>Explore the Data</h1>
     <p>
-      You already know about the Obesity Crisis in the United States. There's
-      extensive literature about how the American diet and sedentary lifestyle
-      are causing obesity, and how that obesity is negatively impacting people's
-      wellbeing, the economy, the healthcare system, and even the armed forces'
-      ability to recruit. This project aims to give you, the reader, an
-      understanding of how this issue has developed over time for different
-      segments of the population and the relationship between state government
-      spending and health outcomes. At the end of this presentation, you will
-      have the opportunity to explore the data yourself.
+      Now that we have some context on the issue, let's explore the data. Below
+      are 2 interactive charts that are meant to inform you on the rise in obesity
+      and various factors surrounding it
       <br />
       <br />
-      Below is an annotated chart of obesity rates for certain years between
-      1994 and 2018 according to the National Institute of Health. The
-      annotation shows the year of the passing of one of the US Goverment's most
-      high-profile pieces of legislation meant to curb obesity: The Healthy,
-      Hunger-Free Kids Act of 2010, a 4.5 billion dollar bill which aimed to
-      improve child nutrition through a variety of channels, the best-known
-      being the new nutritional standards for school lunches and funding for
-      free lunch programs. This was the first major piece of legistlation of a
-      wider effort by the Obama administration to fight both childhood and
-      adulht obesity. Despite massive public investment, obesity rates have
-      continued to rise over the past decade.
+      Below is the same line chart as before. However, this time you can add additional lines
+      by either shift or command (ctrl for windows users) the multiselect dropdown menu to compare
+      how different demographics' obesity rates have changed over time.
     </p>
     <div></div>
     <br />
+    <label for="lineSelector">Select Lines to Show:</label>
+    <select id="lineSelector" multiple>
+      <option value="Adult">Adult</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Black">Black</option>
+      <option value="White">White</option>
+      <option value="Asian">Asian</option>
+      <option value="Hispanic or Latino">Hispanic or Latino</option>
+      <option value="Below 100% Federal Poverty">Below 100% Federal Poverty</option>
+      <option value="100%-199% Federal Poverty">100%-199% Federal Poverty</option>
+      <option value="200%-399% Federal Poverty">200%-399% Federal Poverty</option>
+      <option value="400%+ Federal Poverty">400%+ Federal Poverty</option>
+    </select>
+  <div id="chartContainer"></div>
+  <div id="tooltip" style="position: absolute; visibility: hidden; background-color: rgba(0, 0, 0, 0.7); color: white; padding: 4px;"></div>
     <div id="chartContainer" style="margin-left: 200px"></div>
+        <p>
+        Now that we have some context on the issue, let's explore the data. Below
+        are 2 interactive charts that are meant to inform you on the rise in obesity
+        and various factors surrounding it
+        <br />
+        <br />
+        Below is the same line chart as before. However, this time you can add additional lines
+        by either shift or command (ctrl for windows users) the multiselect dropdown menu to compare
+        how different demographics' obesity rates have changed over time.
+      </p>
+    <div id="chartContainer2" style="margin-left: 200px"></div>
     <div
       id="tooltip"
       style="
@@ -44,46 +57,214 @@
         padding: 4px;
       "
     ></div>
+<select id="lineSelect" multiple></select>
 
-    <script>
-      const lineChartData = [
-        { year: 1994, value: 22.9 },
-        { year: 2002, value: 30.4 },
-        { year: 2004, value: 31.4 },
-        { year: 2006, value: 33.4 },
-        { year: 2008, value: 34 },
-        { year: 2010, value: 34.7 },
-        { year: 2012, value: 35.3 },
-        { year: 2014, value: 36.4 },
-        { year: 2016, value: 38.8 },
-        { year: 2018, value: 41.1 },
-      ];
-
-      function drawLineChart() {
-        const width = window.innerWidth * 0.6;
+  <script>
+    const lineChartData = [
+  {
+    "Year": "1994",
+    "Adult": 22.9,
+    "Male": 20.2,
+    "Female": 25.5,
+    "Black": 30.7,
+    "White": 21.6,
+    "Hispanic or Latino": null,
+    "Asian": null,
+    "Below 100% Federal Poverty Federal Poverty": 25.9,
+    "100%-199% Federal Poverty": 24.3,
+    "200%-399% Federal Poverty": 23.5,
+    "400%+ Federal Poverty": 19.3
+  },
+  {
+    "Year": "2002",
+    "Adult": 30.4,
+    "Male": 27.5,
+    "Female": 33.2,
+    "Black": 39.2,
+    "White": 29.4,
+    "Hispanic or Latino": null,
+    "Asian": null,
+    "Below 100% Federal Poverty": 33,
+    "100%-199% Federal Poverty": 32.8,
+    "200%-399% Federal Poverty": 31.8,
+    "400%+ Federal Poverty": 27.2
+  },
+  {
+    "Year": "2004",
+    "Adult": 31.4,
+    "Male": 29.5,
+    "Female": 33.2,
+    "Black": 42,
+    "White": 30.5,
+    "Hispanic or Latino": null,
+    "Asian": null,
+    "Below 100% Federal Poverty": 33,
+    "100%-199% Federal Poverty": 32.6,
+    "200%-399% Federal Poverty": 33.2,
+    "400%+ Federal Poverty": 28.6
+  },
+  {
+    "Year": "2006",
+    "Adult": 33.4,
+    "Male": 32.4,
+    "Female": 34.3,
+    "Black": 45.5,
+    "White": 32,
+    "Hispanic or Latino": null,
+    "Asian": null,
+    "Below 100% Federal Poverty": 34.6,
+    "100%-199% Federal Poverty": 35,
+    "200%-399% Federal Poverty": 35.5,
+    "400%+ Federal Poverty": 30.7
+  },
+  {
+    "Year": "2008",
+    "Adult": 34,
+    "Male": 32.7,
+    "Female": 35.4,
+    "Black": 45,
+    "White": 32.8,
+    "Hispanic or Latino": null,
+    "Asian": null,
+    "Below 100% Federal Poverty": 35.4,
+    "100%-199% Federal Poverty": 36.8,
+    "200%-399% Federal Poverty": 35.6,
+    "400%+ Federal Poverty": 31.7
+  },
+  {
+    "Year": "2010",
+    "Adult": 34.7,
+    "Male": 33.9,
+    "Female": 35.5,
+    "Black": 47,
+    "White": 33.3,
+    "Hispanic or Latino": 38.9,
+    "Asian": null,
+    "Below 100% Federal Poverty": 36.5,
+    "100%-199% Federal Poverty": 40,
+    "200%-399% Federal Poverty": 36.8,
+    "400%+ Federal Poverty": 32.4
+  },
+  {
+    "Year": "2012",
+    "Adult": 35.3,
+    "Male": 34.6,
+    "Female": 35.9,
+    "Black": 48.8,
+    "White": 33.4,
+    "Hispanic or Latino": 40.9,
+    "Asian": null,
+    "Below 100% Federal Poverty": 37,
+    "100%-199% Federal Poverty": 41.9,
+    "200%-399% Federal Poverty": 37.1,
+    "400%+ Federal Poverty": 31.7
+  },
+  {
+    "Year": "2014",
+    "Adult": 36.4,
+    "Male": 34.5,
+    "Female": 38.1,
+    "Black": 48,
+    "White": 34.6,
+    "Hispanic or Latino": 42.6,
+    "Asian": 11.8,
+    "Below 100% Federal Poverty": 38.1,
+    "100%-199% Federal Poverty": 41.6,
+    "200%-399% Federal Poverty": 38.8,
+    "400%+ Federal Poverty": 31.1
+  },
+  {
+    "Year": "2016",
+    "Adult": 38.8,
+    "Male": 36.8,
+    "Female": 40.7,
+    "Black": 47.9,
+    "White": 37.4,
+    "Hispanic or Latino": 44.8,
+    "Asian": 12.7,
+    "Below 100% Federal Poverty": 41.2,
+    "100%-199% Federal Poverty": 42,
+    "200%-399% Federal Poverty": 41.6,
+    "400%+ Federal Poverty": 34.6
+  },
+  {
+    "Year": "2018",
+    "Adult": 41.1,
+    "Male": 40.5,
+    "Female": 41.5,
+    "Black": 48.6,
+    "White": 40.2,
+    "Hispanic or Latino": 45.7,
+    "Asian": 15.1,
+    "Below 100% Federal Poverty": 43.8,
+    "100%-199% Federal Poverty": 43.9,
+    "200%-399% Federal Poverty": 42.9,
+    "400%+ Federal Poverty": 39.4
+  },
+]
+    function drawLineChart(selectedLines) {
+        const width = window.innerWidth * 0.4;
         const height = window.innerHeight * 0.4;
         const margin = { top: 20, right: 30, bottom: 40, left: 50 };
+  
 
-        const svg = d3
-          .select("#chartContainer")
-          .append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-          .append("g")
-          .attr("transform", `translate(${margin.left},${margin.top})`);
+      const svg = d3
+        .select("#chartContainer")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        const x = d3.scaleLinear().domain([1994, 2018]).range([0, width]);
+      const x = d3.scaleLinear().domain(d3.extent(lineChartData, d => +d.Year)).range([0, width]);
+      const y = d3.scaleLinear().domain([0, d3.max(lineChartData, d => Math.max(...selectedLines.map(line => +d[line])))]).range([height, 0]);
 
-        const y = d3
-          .scaleLinear()
-          .domain([20, d3.max(lineChartData, (d) => d.value)])
-          .range([height, 0]);
+      const lines = selectedLines.map(line => ({
+        name: line,
+        values: lineChartData.map(d => ({
+          year: +d.Year,
+          value: +d[line],
+        })),
+      }));
 
-        const line = d3
-          .line()
-          .x((d) => x(d.year))
-          .y((d) => y(d.value));
+      const line = d3.line().x(d => x(d.year)).y(d => y(d.value));
 
+      const path = svg
+        .selectAll(".line")
+        .data(lines)
+        .enter()
+        .append("path")
+        .attr("class", "line")
+        .attr("fill", "none")
+        .attr("stroke", (d, i) => d3.schemeCategory10[i])
+        .attr("stroke-width", 2)
+        .attr("d", d => line(d.values));
+      const tooltip = document.getElementById("tooltip");
+
+      svg
+        .selectAll(".datapoint")
+        .data(lines.flatMap(d => d.values))
+        .enter()
+        .append("circle")
+        .attr("class", "datapoint")
+        .attr("cx", d => x(d.year))
+        .attr("cy", d => y(d.value))
+        .attr("r", 5)
+        .attr("fill", "transparent")
+        .on("mouseover", function (event, d) {
+          const tooltipX = x(d.year) + 100;
+          const tooltipY = y(d.value) + 200;
+
+          tooltip.style.visibility = "visible";
+          tooltip.style.left = `${tooltipX}px`;
+          tooltip.style.top = `${tooltipY}px`;
+          tooltip.textContent = `${d.year}: ${d.value}%`;
+        })
+        .on("mouseout", function () {
+          tooltip.style.visibility = "hidden";
+        });
+
+    
         const formatNumber = d3.format(".0f");
 
         const chartTitle = "US Adult Obesity Rates";
@@ -120,61 +301,567 @@
           .attr("y", -margin.left + 15)
           .text("Adult Obesity Rate (%)");
 
-        svg
-          .append("path")
-          .datum(lineChartData)
-          .attr("fill", "none")
-          .attr("stroke", "blue")
-          .attr("stroke-width", 2)
-          .attr("d", line);
+      const legend = svg
+        .append("g")
+        .attr("class", "legend")
+        .attr("transform", `translate(${width -300}, 80)`);
 
-        const annotationData = lineChartData.find((d) => d.year === 2010);
-        const annotationX = x(annotationData.year);
-        const annotationY = y(annotationData.value);
+      const legendItems = legend
+        .selectAll(".legend-item")
+        .data(selectedLines)
+        .enter()
+        .append("g")
+        .attr("class", "legend-item")
+        .attr("transform", (d, i) => `translate(0, ${i * 20})`);
 
-        svg
-          .append("line")
-          .attr("x1", annotationX)
-          .attr("y1", annotationY)
-          .attr("x2", annotationX)
-          .attr("y2", annotationY - 20)
-          .attr("stroke", "red");
+      legendItems
+        .append("rect")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", 15)
+        .attr("height", 15)
+        .attr("fill", (d, i) => d3.schemeCategory10[i % d3.schemeCategory10.length]);
 
-        svg
-          .append("text")
-          .attr("x", annotationX - 140)
-          .attr("y", annotationY - 30)
-          .text("Hunger-Free Kids Act of 2010")
-          .attr("fill", "red")
-          .attr("alignment-baseline", "middle");
+      legendItems
+        .append("text")
+        .attr("x", 20)
+        .attr("y", 12)
+        .attr("font-size", "12px")
+        .text(d => {
+          return d
+        });
+    }
 
-        const tooltip = document.getElementById("tooltip");
+    let selectedLines = ["Adult", "Male", "400%+ Federal Poverty"];
 
-        svg
-          .selectAll(".datapoint")
-          .data(lineChartData)
-          .enter()
-          .append("circle")
-          .attr("class", "datapoint")
-          .attr("cx", (d) => x(d.year))
-          .attr("cy", (d) => y(d.value))
-          .attr("r", 20)
-          .attr("fill", "transparent")
-          .on("mouseover", function (event, d) {
-            const tooltipX = x(d.year) + 10;
-            const tooltipY = y(d.value) + 310;
+    drawLineChart(selectedLines);
+    const lineSelector = document.getElementById("lineSelector");
+    lineSelector.addEventListener("change", function () {
+      selectedLines = Array.from(lineSelector.selectedOptions, option => option.value);
+      d3.select("#chartContainer svg").remove();
+      drawLineChart(selectedLines); 
+    });
+  </script>
+</body>
+<div>
+    <label for="xAxisSelector">Select X-Axis:</label>
+    <select id="xAxisSelector">
+      <option value="2021 Per Capita Real GDP">2021 Per Capita Real GDP</option>
+      <option value="2020 Healthcare Spending Per Capita">2020 Healthcare Spending Per Capita</option>
+    </select>
+  </div>
+  <div id="chartContainer2"></div>
+  <div id="tooltip" style="position: absolute; visibility: hidden; background-color: rgba(0, 0, 0, 0.7); color: white; padding: 4px;"></div>
 
-            tooltip.style.visibility = "visible";
-            tooltip.style.left = `${tooltipX}px`;
-            tooltip.style.top = `${tooltipY}px`;
-            tooltip.textContent = `${d.year}: ${d.value}%`;
-          })
-          .on("mouseout", function () {
-            tooltip.style.visibility = "hidden";
-          });
-      }
-      drawLineChart();
-    </script>
-    <a id="nextLink" href="scene2.html">Next</a>
+  <script>
+    const data = [
+ {
+   "State": "Alabama",
+   "Prevalence": 39.9,
+   "95% CI": "(37.9, 41.8)",
+   "2021 Per Capita Real GDP": 40653,
+   "Life Expectancy": 73.2,
+   "2020 Healthcare Spending Per Capita": 8788
+ },
+ {
+   "State": "Alaska",
+   "Prevalence": 33.5,
+   "95% CI": "(31.5, 35.5)",
+   "2021 Per Capita Real GDP": 68653,
+   "Life Expectancy": 76.6,
+   "2020 Healthcare Spending Per Capita": 13188
+ },
+ {
+   "State": "Arizona",
+   "Prevalence": 31.3,
+   "95% CI": "(30.0, 32.6)",
+   "2021 Per Capita Real GDP": 46373,
+   "Life Expectancy": 76.3,
+   "2020 Healthcare Spending Per Capita": 8239
+ },
+ {
+   "State": "Arkansas",
+   "Prevalence": 38.7,
+   "95% CI": "(36.6, 40.8)",
+   "2021 Per Capita Real GDP": 39893,
+   "Life Expectancy": 73.8,
+   "2020 Healthcare Spending Per Capita": 8912
+ },
+ {
+   "State": "California",
+   "Prevalence": 27.6,
+   "95% CI": "(26.1, 29.1)",
+   "2021 Per Capita Real GDP": 73180,
+   "Life Expectancy": 79,
+   "2020 Healthcare Spending Per Capita": 9665
+ },
+ {
+   "State": "Colorado",
+   "Prevalence": 25.1,
+   "95% CI": "(24.1, 26.2)",
+   "2021 Per Capita Real GDP": 62958,
+   "Life Expectancy": 78.3,
+   "2020 Healthcare Spending Per Capita": 8289
+ },
+ {
+   "State": "Connecticut",
+   "Prevalence": 30.4,
+   "95% CI": "(28.9, 31.9)",
+   "2021 Per Capita Real GDP": 68167,
+   "Life Expectancy": 78.4,
+   "2020 Healthcare Spending Per Capita": 11899
+ },
+ {
+   "State": "Delaware",
+   "Prevalence": 33.9,
+   "95% CI": "(31.8, 36.1)",
+   "2021 Per Capita Real GDP": 64121,
+   "Life Expectancy": 76.7,
+   "2020 Healthcare Spending Per Capita": 12294
+ },
+ {
+   "State": "Georgia",
+   "Prevalence": 33.9,
+   "95% CI": "(32.2, 35.6)",
+   "2021 Per Capita Real GDP": 52589,
+   "Life Expectancy": 75.6,
+   "2020 Healthcare Spending Per Capita": 8282
+ },
+ {
+   "State": "Hawaii",
+   "Prevalence": 25,
+   "95% CI": "(23.6, 26.4)",
+   "2021 Per Capita Real GDP": 53918,
+   "Life Expectancy": 80.7,
+   "2020 Healthcare Spending Per Capita": 9593
+ },
+ {
+   "State": "Idaho",
+   "Prevalence": 31.6,
+   "95% CI": "(30.2, 33.0)",
+   "2021 Per Capita Real GDP": 40987,
+   "Life Expectancy": 78.4,
+   "2020 Healthcare Spending Per Capita": 7772
+ },
+ {
+   "State": "Illinois",
+   "Prevalence": 34.2,
+   "95% CI": "(31.8, 36.6)",
+   "2021 Per Capita Real GDP": 61128,
+   "Life Expectancy": 76.8,
+   "2020 Healthcare Spending Per Capita": 9601
+ },
+ {
+   "State": "Indiana",
+   "Prevalence": 36.3,
+   "95% CI": "(35.1, 37.5)",
+   "2021 Per Capita Real GDP": 51811,
+   "Life Expectancy": 75,
+   "2020 Healthcare Spending Per Capita": 9914
+ },
+ {
+   "State": "Iowa",
+   "Prevalence": 36.4,
+   "95% CI": "(35.1, 37.7)",
+   "2021 Per Capita Real GDP": 56455,
+   "Life Expectancy": 77.5,
+   "2020 Healthcare Spending Per Capita": 9265
+ },
+ {
+   "State": "Kansas",
+   "Prevalence": 36,
+   "95% CI": "(35.1, 37.0)",
+   "2021 Per Capita Real GDP": 55454,
+   "Life Expectancy": 76.4,
+   "2020 Healthcare Spending Per Capita": 8845
+ },
+ {
+   "State": "Kentucky",
+   "Prevalence": 40.3,
+   "95% CI": "(38.5, 42.2)",
+   "2021 Per Capita Real GDP": 43097,
+   "Life Expectancy": 73.5,
+   "2020 Healthcare Spending Per Capita": 9778
+ },
+ {
+   "State": "Louisiana",
+   "Prevalence": 38.6,
+   "95% CI": "(36.7, 40.6)",
+   "2021 Per Capita Real GDP": 49250,
+   "Life Expectancy": 73.1,
+   "2020 Healthcare Spending Per Capita": 9796
+ },
+ {
+   "State": "Maine",
+   "Prevalence": 31.9,
+   "95% CI": "(30.6, 33.2)",
+   "2021 Per Capita Real GDP": 45047,
+   "Life Expectancy": 77.8,
+   "2020 Healthcare Spending Per Capita": 11505
+ },
+ {
+   "State": "Maryland",
+   "Prevalence": 34.3,
+   "95% CI": "(33.2, 35.5)",
+   "2021 Per Capita Real GDP": 59081,
+   "Life Expectancy": 76.8,
+   "2020 Healthcare Spending Per Capita": 10340
+ },
+ {
+   "State": "Massachusetts",
+   "Prevalence": 27.4,
+   "95% CI": "(25.9, 28.8)",
+   "2021 Per Capita Real GDP": 75952,
+   "Life Expectancy": 79,
+   "2020 Healthcare Spending Per Capita": 12754
+ },
+ {
+   "State": "Michigan",
+   "Prevalence": 34.4,
+   "95% CI": "(33.1, 35.7)",
+   "2021 Per Capita Real GDP": 47094,
+   "Life Expectancy": 76,
+   "2020 Healthcare Spending Per Capita": 9524
+ },
+ {
+   "State": "Minnesota",
+   "Prevalence": 32.4,
+   "95% CI": "(31.5, 33.3)",
+   "2021 Per Capita Real GDP": 60478,
+   "Life Expectancy": 79.1,
+   "2020 Healthcare Spending Per Capita": 10510
+ },
+ {
+   "State": "Mississippi",
+   "Prevalence": 39.1,
+   "95% CI": "(37.1, 41.1)",
+   "2021 Per Capita Real GDP": 35258,
+   "Life Expectancy": 71.9,
+   "2020 Healthcare Spending Per Capita": 8852
+ },
+ {
+   "State": "Missouri",
+   "Prevalence": 37.3,
+   "95% CI": "(35.9, 38.7)",
+   "2021 Per Capita Real GDP": 47944,
+   "Life Expectancy": 75.1,
+   "2020 Healthcare Spending Per Capita": 9461
+ },
+ {
+   "State": "Montana",
+   "Prevalence": 31.8,
+   "95% CI": "(30.3, 33.3)",
+   "2021 Per Capita Real GDP": 44612,
+   "Life Expectancy": 76.8,
+   "2020 Healthcare Spending Per Capita": 9791
+ },
+ {
+   "State": "Nebraska",
+   "Prevalence": 35.9,
+   "95% CI": "(34.8, 37.1)",
+   "2021 Per Capita Real GDP": 63094,
+   "Life Expectancy": 77.7,
+   "2020 Healthcare Spending Per Capita": 9974
+ },
+ {
+   "State": "Nevada",
+   "Prevalence": 31.3,
+   "95% CI": "(28.7, 34.1)",
+   "2021 Per Capita Real GDP": 49462,
+   "Life Expectancy": 76.3,
+   "2020 Healthcare Spending Per Capita": 8118
+ },
+ {
+   "State": "New Hampshire",
+   "Prevalence": 30.6,
+   "95% CI": "(29.0, 32.3)",
+   "2021 Per Capita Real GDP": 58987,
+   "Life Expectancy": 79,
+   "2020 Healthcare Spending Per Capita": 11359
+ },
+ {
+   "State": "New Jersey",
+   "Prevalence": 28.2,
+   "95% CI": "(26.8, 29.6)",
+   "2021 Per Capita Real GDP": 60621,
+   "Life Expectancy": 77.5,
+   "2020 Healthcare Spending Per Capita": 11266
+ },
+ {
+   "State": "New Mexico",
+   "Prevalence": 34.6,
+   "95% CI": "(32.9, 36.3)",
+   "2021 Per Capita Real GDP": 44904,
+   "Life Expectancy": 74.5,
+   "2020 Healthcare Spending Per Capita": 8505
+ },
+ {
+   "State": "New York",
+   "Prevalence": 29.1,
+   "95% CI": "(28.3, 30.0)",
+   "2021 Per Capita Real GDP": 75207,
+   "Life Expectancy": 77.7,
+   "2020 Healthcare Spending Per Capita": 13012
+ },
+ {
+   "State": "North Carolina",
+   "Prevalence": 36,
+   "95% CI": "(34.2, 37.9)",
+   "2021 Per Capita Real GDP": 50524,
+   "Life Expectancy": 76.1,
+   "2020 Healthcare Spending Per Capita": 8607
+ },
+ {
+   "State": "North Dakota",
+   "Prevalence": 35.2,
+   "95% CI": "(33.6, 36.9)",
+   "2021 Per Capita Real GDP": 71915,
+   "Life Expectancy": 76.9,
+   "2020 Healthcare Spending Per Capita": 10741
+ },
+ {
+   "State": "Ohio",
+   "Prevalence": 37.8,
+   "95% CI": "(36.6, 39.0)",
+   "2021 Per Capita Real GDP": 52242,
+   "Life Expectancy": 75.3,
+   "2020 Healthcare Spending Per Capita": 10093
+ },
+ {
+   "State": "Oklahoma",
+   "Prevalence": 39.4,
+   "95% CI": "(37.7, 41.2)",
+   "2021 Per Capita Real GDP": 48932,
+   "Life Expectancy": 74.1,
+   "2020 Healthcare Spending Per Capita": 8997
+ },
+ {
+   "State": "Oregon",
+   "Prevalence": 30.4,
+   "95% CI": "(28.9, 31.9)",
+   "2021 Per Capita Real GDP": 52855,
+   "Life Expectancy": 78.8,
+   "2020 Healthcare Spending Per Capita": 9625
+ },
+ {
+   "State": "Pennsylvania",
+   "Prevalence": 33.3,
+   "95% CI": "(31.7, 34.9)",
+   "2021 Per Capita Real GDP": 55051,
+   "Life Expectancy": 76.8,
+   "2020 Healthcare Spending Per Capita": 11229
+ },
+ {
+   "State": "Rhode Island",
+   "Prevalence": 30.1,
+   "95% CI": "(28.4, 31.8)",
+   "2021 Per Capita Real GDP": 49491,
+   "Life Expectancy": 78.2,
+   "2020 Healthcare Spending Per Capita": 11049
+ },
+ {
+   "State": "South Carolina",
+   "Prevalence": 36.1,
+   "95% CI": "(34.6, 37.5)",
+   "2021 Per Capita Real GDP": 42516,
+   "Life Expectancy": 74.8,
+   "2020 Healthcare Spending Per Capita": 8362
+ },
+ {
+   "State": "South Dakota",
+   "Prevalence": 38.4,
+   "95% CI": "(35.6, 41.4)",
+   "2021 Per Capita Real GDP": 54702,
+   "Life Expectancy": 76.7,
+   "2020 Healthcare Spending Per Capita": 11736
+ },
+ {
+   "State": "Tennessee",
+   "Prevalence": 35,
+   "95% CI": "(33.1, 36.8)",
+   "2021 Per Capita Real GDP": 49238,
+   "Life Expectancy": 73.8,
+   "2020 Healthcare Spending Per Capita": 8909
+ },
+ {
+   "State": "Texas",
+   "Prevalence": 36.1,
+   "95% CI": "(34.4, 37.8)",
+   "2021 Per Capita Real GDP": 62021,
+   "Life Expectancy": 76.5,
+   "2020 Healthcare Spending Per Capita": 8048
+ },
+ {
+   "State": "Utah",
+   "Prevalence": 30.9,
+   "95% CI": "(29.8, 32.1)",
+   "2021 Per Capita Real GDP": 54788,
+   "Life Expectancy": 78.6,
+   "2020 Healthcare Spending Per Capita": 7241
+ },
+ {
+   "State": "Vermont",
+   "Prevalence": 29,
+   "95% CI": "(27.4, 30.7)",
+   "2021 Per Capita Real GDP": 45934,
+   "Life Expectancy": 78.8,
+   "2020 Healthcare Spending Per Capita": 12237
+ },
+ {
+   "State": "Virginia",
+   "Prevalence": 34.2,
+   "95% CI": "(32.9, 35.6)",
+   "2021 Per Capita Real GDP": 57002,
+   "Life Expectancy": 77.6,
+   "2020 Healthcare Spending Per Capita": 8815
+ },
+ {
+   "State": "Washington",
+   "Prevalence": 28.8,
+   "95% CI": "(27.7, 29.9)",
+   "2021 Per Capita Real GDP": 73437,
+   "Life Expectancy": 79.2,
+   "2020 Healthcare Spending Per Capita": 8939
+ },
+ {
+   "State": "West Virginia",
+   "Prevalence": 40.6,
+   "95% CI": "(39.1, 42.1)",
+   "2021 Per Capita Real GDP": 40652,
+   "Life Expectancy": 72.8,
+   "2020 Healthcare Spending Per Capita": 12019
+ },
+ {
+   "State": "Wisconsin",
+   "Prevalence": 33.9,
+   "95% CI": "(32.1, 35.7)",
+   "2021 Per Capita Real GDP": 51355,
+   "Life Expectancy": 77.7,
+   "2020 Healthcare Spending Per Capita": 9626
+ },
+ {
+   "State": "Wyoming",
+   "Prevalence": 32,
+   "95% CI": "(29.9, 34.1)",
+   "2021 Per Capita Real GDP": 63339,
+   "Life Expectancy": 76.3,
+   "2020 Healthcare Spending Per Capita": 10296
+ }
+]
+
+    data.forEach(function (d) {
+      d["2021 Per Capita Real GDP"] = +d["2021 Per Capita Real GDP"];
+      d["Prevalence"] = +d["Prevalence"];
+      d["Life Expectancy"] = +d["Life Expectancy"];
+      d["2020 Healthcare Spending Per Capita"] = +d["2020 Healthcare Spending Per Capita"];
+    });
+    const filteredData = data.filter(d => !isNaN(d["2021 Per Capita Real GDP"]));
+
+    drawScatterPlot(filteredData, "2021 Per Capita Real GDP");
+
+    function drawScatterPlot(data, xAxisKey) {
+      const width = window.innerWidth * 0.6;
+      const height = window.innerHeight * 0.4;
+      const margin = { top: 20, right: 30, bottom: 40, left: 50 };
+
+      const svg = d3
+        .select("#chartContainer2")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+      const x = d3
+        .scaleLinear()
+        .domain([d3.min(data, d => d[xAxisKey]) -1000, d3.max(data, d => d[xAxisKey])])
+        .range([0, width]);
+
+      const y = d3
+        .scaleLinear()
+        .domain([20, d3.max(data, d => d["Prevalence"])])
+        .range([height, 0]);
+
+      svg.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(x));
+      svg.append("g").call(d3.axisLeft(y));
+
+      svg
+        .append("text")
+        .attr("x", width / 2)
+        .attr("y", height + margin.top + 18)
+        .attr("text-anchor", "middle")
+        .text(xAxisKey === "2021 Per Capita Real GDP" ? "2021 Per Capita Real GDP in USD" : "2020 Healthcare Spending Per Capita");
+
+      svg
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -height / 2)
+        .attr("y", -margin.left + 20)
+        .attr("text-anchor", "middle")
+        .text("Adult Obesity Rate (%)");
+
+      svg
+        .append("text")
+        .attr("x", width / 2)
+        .attr("y", -margin.top / 2 + 2)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("font-weight", "bold")
+        .text("Scatter Plot - Obesity vs. X-Axis Data by State");
+
+      const tooltip = d3
+        .select("#chartContainer2")
+        .append("div")
+        .style("visibility", "hidden")
+        .style("background-color", "rgba(0, 0, 0, 0.7)")
+        .style("color", "white")
+        .style("padding", "4px");
+
+      const referenceY = y(22.9);
+      svg
+        .append("line")
+        .attr("x1", 0)
+        .attr("x2", width)
+        .attr("y1", referenceY)
+        .attr("y2", referenceY)
+        .attr("stroke", "red")
+        .attr("stroke-dasharray", "5,5");
+
+      svg
+        .append("text")
+        .attr("x", 675)
+        .attr("y", referenceY - 6)
+        .attr("fill", "red")
+        .text("1992 obesity rate");
+
+      const circles = svg
+        .selectAll("circle")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("cx", d => x(d[xAxisKey]))
+        .attr("cy", d => y(d["Prevalence"]))
+        .attr("r", 5)
+        .attr("fill", "blue")
+        .on("mouseover", function (event, d) {
+          const tooltipContent = `State: ${d.State}<br/>${xAxisKey}: ${xAxisKey === "2021 Per Capita Real GDP" ? `$${d[xAxisKey]}` : d[xAxisKey]}<br/>Obesity: ${d.Prevalence}%`;
+          tooltip.html(tooltipContent).style("visibility", "visible");
+        })
+        .on("mousemove", function (event) {
+          tooltip.style("top", event.pageY - 10 + "px").style("left", event.pageX + 10 + "px");
+        })
+        .on("mouseout", function () {
+          tooltip.style("visibility", "hidden");
+        });
+    }
+
+    const xAxisSelector = document.getElementById("xAxisSelector");
+    xAxisSelector.addEventListener("change", function () {
+      const xAxisKey = xAxisSelector.value;
+      d3.select("#chartContainer2 svg").remove();
+      drawScatterPlot(data, xAxisKey);
+    });
+  </script>
+    <a href="scene2.html">Previous</a>
   </body>
 </html>
