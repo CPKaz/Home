@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Obesity in the United States</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+  </head>
+  <body>
+    <h1>Obesity Rates in the United States</h1>
+    <p>
+      You already know about the Obesity Crisis in the United States. There's
+      extensive literature about how the American diet and sedentary lifestyle
+      are causing obesity, and how that obesity is negatively impacting people's
+      wellbeing, the economy, the healthcare system, and even the armed forces'
+      ability to recruit. This project aims to give you, the reader, an
+      understanding of how this issue has developed over time for different
+      segments of the population and the relationship between state government
+      spending and health outcomes. At the end of this presentation, you will
+      have the opportunity to explore the data yourself.
+      <br />
+      <br />
+      Below is an annotated chart of obesity rates for certain years between
+      1994 and 2018 according to the National Institute of Health. The
+      annotation shows the year of the passing of one of the US Goverment's most
+      high-profile pieces of legislation meant to curb obesity: The Healthy,
+      Hunger-Free Kids Act of 2010, a 4.5 billion dollar bill which aimed to
+      improve child nutrition through a variety of channels, the best-known
+      being the new nutritional standards for school lunches and funding for
+      free lunch programs. This was the first major piece of legistlation of a
+      wider effort by the Obama administration to fight both childhood and
+      adulht obesity. Despite massive public investment, obesity rates have
+      continued to rise over the past decade.
+    </p>
+    <div></div>
+    <br />
+    <div id="chartContainer" style="margin-left: 200px"></div>
+    <div
+      id="tooltip"
+      style="
+        position: absolute;
+        visibility: hidden;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 4px;
+      "
+    ></div>
+
+    <script>
+      const lineChartData = [
+        { year: 1994, value: 22.9 },
+        { year: 2002, value: 30.4 },
+        { year: 2004, value: 31.4 },
+        { year: 2006, value: 33.4 },
+        { year: 2008, value: 34 },
+        { year: 2010, value: 34.7 },
+        { year: 2012, value: 35.3 },
+        { year: 2014, value: 36.4 },
+        { year: 2016, value: 38.8 },
+        { year: 2018, value: 41.1 },
+      ];
+
+      function drawLineChart() {
+        const width = window.innerWidth * 0.6;
+        const height = window.innerHeight * 0.4;
+        const margin = { top: 20, right: 30, bottom: 40, left: 50 };
+
+        const svg = d3
+          .select("#chartContainer")
+          .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+          .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        const x = d3.scaleLinear().domain([1994, 2018]).range([0, width]);
+
+        const y = d3
+          .scaleLinear()
+          .domain([20, d3.max(lineChartData, (d) => d.value)])
+          .range([height, 0]);
+
+        const line = d3
+          .line()
+          .x((d) => x(d.year))
+          .y((d) => y(d.value));
+
+        const formatNumber = d3.format(".0f");
+
+        const chartTitle = "US Adult Obesity Rates";
+
+        svg
+          .append("text")
+          .attr("class", "chart-title")
+          .attr("x", width / 2)
+          .attr("y", -margin.top / 2 + 5)
+          .attr("text-anchor", "middle")
+          .text(chartTitle)
+          .style("font-size", "16px")
+          .style("font-weight", "bold");
+
+        svg
+          .append("g")
+          .attr("transform", `translate(0,${height})`)
+          .call(d3.axisBottom(x).tickFormat(formatNumber));
+        svg.append("g").call(d3.axisLeft(y));
+        svg
+          .append("text")
+          .attr("class", "x axis-title")
+          .attr("text-anchor", "middle")
+          .attr("x", width / 2)
+          .attr("y", height + margin.bottom - 5)
+          .text("Year");
+
+        svg
+          .append("text")
+          .attr("class", "y axis-title")
+          .attr("text-anchor", "middle")
+          .attr("transform", "rotate(-90)")
+          .attr("x", -height / 2)
+          .attr("y", -margin.left + 15)
+          .text("Adult Obesity Rate (%)");
+
+        svg
+          .append("path")
+          .datum(lineChartData)
+          .attr("fill", "none")
+          .attr("stroke", "blue")
+          .attr("stroke-width", 2)
+          .attr("d", line);
+
+        const annotationData = lineChartData.find((d) => d.year === 2010);
+        const annotationX = x(annotationData.year);
+        const annotationY = y(annotationData.value);
+
+        svg
+          .append("line")
+          .attr("x1", annotationX)
+          .attr("y1", annotationY)
+          .attr("x2", annotationX)
+          .attr("y2", annotationY - 20)
+          .attr("stroke", "red");
+
+        svg
+          .append("text")
+          .attr("x", annotationX - 140)
+          .attr("y", annotationY - 30)
+          .text("Hunger-Free Kids Act of 2010")
+          .attr("fill", "red")
+          .attr("alignment-baseline", "middle");
+
+        const tooltip = document.getElementById("tooltip");
+
+        svg
+          .selectAll(".datapoint")
+          .data(lineChartData)
+          .enter()
+          .append("circle")
+          .attr("class", "datapoint")
+          .attr("cx", (d) => x(d.year))
+          .attr("cy", (d) => y(d.value))
+          .attr("r", 20)
+          .attr("fill", "transparent")
+          .on("mouseover", function (event, d) {
+            const tooltipX = x(d.year) + 10;
+            const tooltipY = y(d.value) + 310;
+
+            tooltip.style.visibility = "visible";
+            tooltip.style.left = `${tooltipX}px`;
+            tooltip.style.top = `${tooltipY}px`;
+            tooltip.textContent = `${d.year}: ${d.value}%`;
+          })
+          .on("mouseout", function () {
+            tooltip.style.visibility = "hidden";
+          });
+      }
+      drawLineChart();
+    </script>
+    <a id="nextLink" href="scene2.html">Next</a>
+  </body>
+</html>
