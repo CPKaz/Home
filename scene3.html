@@ -37,14 +37,7 @@
   <div id="tooltip" style="position: absolute; visibility: hidden; background-color: rgba(0, 0, 0, 0.7); color: white; padding: 4px;"></div>
     <div id="chartContainer" style="margin-left: 200px"></div>
         <p>
-        Now that we have some context on the issue, let's explore the data. Below
-        are 2 interactive charts that are meant to inform you on the rise in obesity
-        and various factors surrounding it
-        <br />
-        <br />
-        Below is the same line chart as before. However, this time you can add additional lines
-        by either shift or command (ctrl for windows users) the multiselect dropdown menu to compare
-        how different demographics' obesity rates have changed over time.
+        In this updated scatter plot, you may now change the x axis to explore other factors that may be related to obesity.
       </p>
     <div id="chartContainer2" style="margin-left: 200px"></div>
     <div
@@ -807,7 +800,7 @@
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
         .style("font-weight", "bold")
-        .text("Scatter Plot - Obesity vs. X-Axis Data by State");
+        .text("Scatter Plot - Obesity vs. Selected Attributes by State");
 
       const tooltip = d3
         .select("#chartContainer2")
